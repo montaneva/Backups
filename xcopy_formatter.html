@@ -1,0 +1,296 @@
+<html>
+<head><meta name="robots" content="none" />
+<title>Xcopy Backup Code Formatter</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" media="screen" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"  />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+
+/* 1. Source, Destination & Flags variables
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = */
+
+	/*  /!\  Escape all backslash character ( \ ) using x2 backslash  ( \\ )  */
+	
+	var source_1 = "C:\\Users\\Username\\Documents";
+	var destination_1 = "backupDocs";
+	
+	var source_2 = "C:\\Users\\Username\\Desktop";
+	var destination_2 = "backupDesk";
+	
+	
+	var flags = "/c /i /r /s /y ";
+	var flags_2 = "/e /i /s /y ";
+
+	
+	var target = (getUrlParams().drive);
+	if (typeof(target) === 'undefined') { var target ="O"};
+
+
+	
+/* 2. Copy/Paste function 
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = */
+	function fnSelect(objId){ fnDeSelect();if(document.selection){ var range=document.body.createTextRange();range.moveToElementText(document.getElementById(objId));range.select()}else if(window.getSelection){ var range=document.createRange();range.selectNode(document.getElementById(objId));window.getSelection().addRange(range)}}function fnDeSelect(){ if(document.selection)document.selection.empty();else if(window.getSelection)window.getSelection().removeAllRanges()}
+	
+/* 3. Date management
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = */
+
+function getUrlParams(url) {
+
+// https://www.sitepoint.com/get-url-parameters-with-javascript/
+
+    // get query string from url (optional) or window
+    var queryString = url ? url.split('?')[1] : window.location.search.slice(1);
+
+    // we'll store the parameters here
+    var obj = {};
+
+    // if query string exists
+    if (queryString) {
+
+        // stuff after # is not part of query string, so get rid of it
+        queryString = queryString.split('#')[0];
+
+        // split our query string into its component parts
+        var arr = queryString.split('&');
+
+        for (var i = 0; i < arr.length; i++) {
+            // separate the keys and the values
+            var a = arr[i].split('=');
+
+            // set parameter name and value (use 'true' if empty)
+            var paramName = a[0];
+            var paramValue = typeof(a[1]) === 'undefined' ? true : a[1];
+
+        obj[paramName] = paramValue;
+
+    }
+  }
+  
+  return obj;
+}
+			// https://www.sitepoint.com/managing-dates-times-using-moment-js/
+			
+            var today= moment().format('MM-DD-YYYY');
+            var datestamp = moment().format('YYMMDD');
+
+            var dateFrom = moment().subtract('days', getUrlParams().ndays);
+            var from = moment(dateFrom).format('MM-DD-YYYY');
+			
+			var dateFrom2 = moment().subtract('months', 3);
+            var from2 = moment(dateFrom2).format('MM-DD-YYYY');
+            
+            
+        	var dstamp = (getUrlParams().datestamp);
+
+
+            
+            //  "undefined " issues fixes
+		   if (window.location.href.indexOf("undefined") != -1)  {  window.location = "?ndays=90&drive=O&datestamp=0" }  ;     
+		   if (typeof(dstamp) === 'undefined') { var dstamp ="0"};
+   
+   
+</script> 
+
+</head>
+
+<body>
+
+<h1>Xcopy Backup Code Formatter</h1>
+
+
+
+		
+		
+<h5>1. Syntax </h5>
+
+<div class="settings">
+
+	
+		<script type="text/javascript" charset="utf-8">
+			if ((getUrlParams().ndays) > "1") {
+			    document.write("Frame time: <b>" + getUrlParams().ndays + "</b> days &nbsp;")
+			} else {
+			    document.write("Frame time: <b>today</b> &nbsp; ")
+			}
+		</script>
+
+		<select onchange="location = this.value;">
+			<option selected disabled>Change</option>
+			<script> document.write("<option value='?ndays=1&drive="+ target +" '>today</option>")</script>
+			<script> document.write("<option value='?ndays=2&drive="+ target +" '>2 days</option>")</script>
+			<script> document.write("<option value='?ndays=5&drive="+ target +" '>5 days</option>")</script>
+			<script> document.write("<option value='?ndays=7&drive="+ target +" '>1 week</option>")</script>
+			<script> document.write("<option value='?ndays=15&drive="+ target +" '>2 weeks</option>")</script>
+			<script> document.write("<option value='?ndays=30&drive="+ target +" '>1 month</option>")</script>
+			<script> document.write("<option value='?ndays=60&drive="+ target +" '>2 months</option>")</script>
+			<script> document.write("<option value='?ndays=90&drive="+ target +" '>3 months</option>")</script>
+			<script> document.write("<option value='?ndays=120&drive="+ target +" '>4 months</option>")</script>
+			<script> document.write("<option value='?ndays=180&drive="+ target +" '>5 months</option>")</script>
+			<script> document.write("<option value='?ndays=365&drive="+ target +" '>1 year</option>")</script>
+			<script> document.write("<option value='?ndays=730&drive="+ target +" '>2 years</option>")</script>
+			<script> document.write("<option value='?ndays=1095&drive="+ target +" '>3 years</option>")</script>
+			<script> document.write("<option value='?ndays=1460&drive="+ target +" '>4 years</option>")</script>
+			<script> document.write("<option value='?ndays=1825&drive="+ target +" '>5 years</option>")</script>
+		</select>
+		
+		
+		<span style="margin-left:20px"><script>document.write("Destination drive: <b>" + target + "</b>:&nbsp;")</script></span>
+		<select onchange="location = this.value;">
+			<option selected disabled>Change</option>
+			<script> document.write("<option value='?ndays="+ getUrlParams().ndays +"&drive=C'>C:</option>")</script>	
+			<script> document.write("<option value='?ndays="+ getUrlParams().ndays +"&drive=D'>D:</option>")</script>
+			<script> document.write("<option value='?ndays="+ getUrlParams().ndays +"&drive=E'>E:</option>")</script>
+			<script> document.write("<option value='?ndays="+ getUrlParams().ndays +"&drive=F'>F:</option>")</script>
+			<script> document.write("<option value='?ndays="+ getUrlParams().ndays +"&drive=G'>G:</option>")</script>
+			<script> document.write("<option value='?ndays="+ getUrlParams().ndays +"&drive=H'>H:</option>")</script>
+			<script> document.write("<option value='?ndays="+ getUrlParams().ndays +"&drive=I'>I:</option>")</script>
+			<script> document.write("<option value='?ndays="+ getUrlParams().ndays +"&drive=J'>J:</option>")</script>
+			<script> document.write("<option value='?ndays="+ getUrlParams().ndays +"&drive=K'>K:</option>")</script>
+			<script> document.write("<option value='?ndays="+ getUrlParams().ndays +"&drive=L'>L:</option>")</script>
+			<script> document.write("<option value='?ndays="+ getUrlParams().ndays +"&drive=M'>M:</option>")</script>
+			<script> document.write("<option value='?ndays="+ getUrlParams().ndays +"&drive=N'>N:</option>")</script>
+			<script> document.write("<option value='?ndays="+ getUrlParams().ndays +"&drive=O'>O:</option>")</script>
+			<script> document.write("<option value='?ndays="+ getUrlParams().ndays +"&drive=P'>P:</option>")</script>
+			<script> document.write("<option value='?ndays="+ getUrlParams().ndays +"&drive=R'>R:</option>")</script>
+			<script> document.write("<option value='?ndays="+ getUrlParams().ndays +"&drive=S'>S:</option>")</script>	
+		</select>
+
+		<span style="margin-left:20px">
+		<script type="text/javascript" charset="utf-8">
+				if ( dstamp === "1") {
+				    document.write("Datestamp: <b>Yes</b>&nbsp; ")
+				} else {
+			 	   document.write("Datestamp: <b>No</b>&nbsp; ")
+				}
+		</script>
+		</span>
+		
+		<select onchange="location = this.value;">
+			<option selected disabled>Change</option>
+			<script> document.write("<option value='?ndays="+ getUrlParams().ndays +"&drive="+ target +"&datestamp=1'>Yes</option>")</script>
+			<script> document.write("<option value='?ndays="+ getUrlParams().ndays +"&drive="+ target +"&datestamp=0'>No</option>")</script>
+		</select>
+		
+		
+		<span><a class="reset" href="?ndays=90&drive=O&datestamp=0" >Reset default</a></span> <!-- see also line #67-->
+
+</div>
+
+
+<p class="format">[ <font color=steelblue>command</font> <font color=blue style="padding-left:12px">source</font> <font color=green style="padding-left:12px">destination</font> <font color=red style="padding-left:12px">date option[mm-dd-yyyy]</font> <a href="https://www.lifewire.com/xcopy-command-2618103" style="color:coral;padding-left:12px" target="external">other options</a> ]</p>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+<!-- Code #1 -->
+<div class="codeblock">
+<p>Snippet #1</p>
+<pre id="selectcontent_1" >
+		Xcopy <font color=blue><script>document.write(source_1)</script></font> <!-- -->
+		<font color=green><b><script>document.write(target)</script></b>:\<script>document.write(destination_1)</script><script>if ( dstamp === "1") { document.write("_" + datestamp) }</script></font>
+		<font color=red>/d:<script>document.write(from)</script></font>
+		<font color=coral><script>document.write(flags)</script></font>
+</pre>
+<p class="nlines">Plain text: 1 line command
+<a href="javascript:fnSelect('selectcontent_1');"  class="selectbutton"><input type="button" value="  Copy  " /></a>
+</p>
+</div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+<!-- Code #2 -->
+<div class="codeblock">
+<p>Snippet #2 <font color=grey>(open this html file with a text editor for code editing)</font></p>
+<pre id="selectcontent_2" >
+		Xcopy <font color=blue><script>document.write(source_2)</script></font> <!-- -->
+		<font color=green><b><script>document.write(target)</script></b>:\<script>document.write(destination_2)</script><script>if ( dstamp === "1") { document.write("_" + datestamp) }</script></font>
+		<font color=red>/d:<script>document.write(from)</script></font>
+		<font color=coral><script>document.write(flags_2)</script></font> <!-- -->
+
+</pre>
+<p class="nlines">Plain text: 1 line command
+<a href="javascript:fnSelect('selectcontent_2');"  class="selectbutton"><input type="button" value="  Copy  " /></a>
+</p>
+</div>
+
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+<!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
+
+<h5>2. Xcopy Command Options</h5>
+
+<table class="mntl-sc-block-table__table">
+<tr><td>Item</td><td>Description</td></tr>
+<tr><td><em>source</em></td><td>This defines the files or top level folder that you want to copy from. The <em>source</em> is the only required parameter in the xcopy command. Use quotes around <em>source</em> if it contains spaces.</td></tr>
+<tr><td><em>destination</em></td><td>This option specifies the location where the <em>source</em> files or folders should be copied to. If no <em>destination</em> is listed, the files or folders will be copied to the same folder you run the xcopy command from. Use quotes around <em>destination</em> if it contains spaces.</td></tr>
+<tr><td>/a</td><td>Using this option will only copy <a target="ext" href="https://www.lifewire.com/what-is-an-archive-file-2625792">archive files</a> found in <em>source</em>. You can not use <b>/a</b> and <b>/m</b> together.</td></tr>
+<tr><td>/b</td><td>Use this option to copy the symbolic link itself instead of the link target. This option was first available in Windows Vista.</td></tr>
+<tr class="highlight"><td>/c</td><td>This option forces xcopy to continue even if it encounters an error.</td></tr>
+<tr class="highlight"><td>/d [<b>:</b><em>date</em>]</td><td>Use the xcopy command with <b>/d</b> option and a specific date, in MM-DD-YYYY format, to copy files changed on or after that date. You can also use this option without specifying a specific date to copy only those files in <em>source</em> that are newer than the same files that already exist in <em>destination</em>. This is helpful when using the xcopy command to perform regular file backups.</td></tr>
+<tr><td>/e</td><td>When used alone or with <b>/s</b>, this option is the same as <b>/s</b> but will also create empty folders in <em>destination</em> that were also empty in <em>source</em>. The <b>/e</b> option can also be used together with the <b>/t</b> option to include empty directories and subdirectories found in <em>source</em> in the directory structure created in <em>destination</em>.</td></tr>
+<tr><td>/f</td><td>This option will display the full path and file name of both the <em>source</em> and <em>destination</em> files being copied.</td></tr>
+<tr><td>/g</td><td>Using the xcopy command with this option allows you to copy encrypted files in <em>source</em> to a <em>destination</em> that does not support encryption. This option will not work when copying files from an EFS encrypted <a target="ext" href="https://www.lifewire.com/what-is-a-hard-disk-drive-2618152">drive</a> to a non-EFS encrypted drive.</td></tr>
+<tr><td>/h</td><td>The xcopy command does not copy <a target="ext" href="https://www.lifewire.com/what-is-a-hidden-file-2625898">hidden files</a> or <a target="ext" href="https://www.lifewire.com/what-is-a-system-file-2626015">system files</a> by default but will when using this option.</td>
+</tr><tr class="highlight"><td>/i</td><td>Use the <b>/i</b> option to force xcopy to assume that <em>destination</em> is a directory. If you don't use this option, and you're copying from <em>source</em> that is a directory or group of files and copying to <em>destination</em> that doesn't exist, the xcopy command will prompt you enter whether <em>destination</em> is a file or directory.</td></tr>
+<tr><td>/j</td><td>This option copies files without buffering, a feature useful for very big files. This xcopy command option was first available in Windows 7.</td></tr>
+<tr><td>/k</td><td>Use this option when copying <a target="ext" href="https://www.lifewire.com/what-is-a-read-only-file-2625983">read-only</a> files to retain that <a target="ext" href="https://www.lifewire.com/what-is-a-file-attribute-2625793">file attribute</a> in <em>destination</em>.</td></tr>
+<tr><td>/l</td><td>Use this option to show a list of the files and folders to be copied... but no copying is actually done. The <b>/l</b> option is useful if you're building a complicated xcopy command with several options and you'd like to see how it would function hypothetically.</td></tr>
+<tr><td>/m</td><td>This option is identical to the <b>/a</b> option but the xcopy command will turn off the <a target="ext" href="https://www.lifewire.com/what-is-an-archive-file-2625792">archive attribute</a> after copying the file. You can not use <b>/m</b> and <b>/a</b> together.</td></tr>
+<tr><td>/n</td><td>This option creates files and folders in <em>destination</em> using short file names. This option is only useful when you're using the xcopy command to copy files to a <em>destination</em> that exists on an drive <a target="ext" href="https://www.lifewire.com/what-does-it-mean-to-format-something-2625882">formatted</a> to an older <a target="ext" href="https://www.lifewire.com/what-is-a-file-system-2625880">file system</a> like <a target="ext" href="https://www.lifewire.com/what-is-file-allocation-table-fat-2625877">FAT</a> that does not support long file names.</td></tr>
+<tr><td>/o</td><td>Retains ownership and Access Control List (ACL) information in the files written in <em>destination</em>.</td></tr>
+<tr><td>/p</td><td>When using this option, you'll be prompted before the creation of each file in <em>destination</em>.</td></tr>
+<tr><td>/q</td><td>A kind of opposite of the <b>/f</b> option, the <b>/q</b> switch will put xcopy into "quiet" mode, skipping the on-screen display of each file being copied.</td>
+</tr><tr class="highlight"><td>/r</td><td>Use this option to overwrite <a target="ext" href="https://www.lifewire.com/what-is-a-read-only-file-2625983">read-only files</a> in <em>destination</em>. If you don't use this option when you want to overwrite a read-only file in <em>destination</em>, you'll be prompted with an "Access denied" message and the xcopy command will stop running.</td>
+</tr><tr class="highlight"><td>/s</td><td>Use this option to copy directories, subdirectories, and the files contained within them, in addition to the files in the <a target="ext" href="https://www.lifewire.com/what-is-a-root-folder-or-root-directory-2625989">root</a> of <em>source</em>. Empty folders will not be recreated.</td></tr>
+<tr><td>/t</td><td>This option forces the xcopy command to create a directory structure in <em>destination</em> but not to copy any of the files. In other words, the folders and subfolders found in <em>source</em> will be created but there we be no files. Empty folders will not be created.</td></tr>
+<tr><td>/u</td><td>This option will only copy files in <em>source</em> that are already in <em>destination</em>.</td></tr>
+<tr><td>/v</td><td>This option verifies each file as it's written, based on its size, to make sure they're identical. Verification was built in to the xcopy command beginning in Windows XP, so this option does nothing in later <a target="ext" href="https://www.lifewire.com/what-version-of-windows-do-i-have-2624927">versions of Windows</a> and is only included for compatibility with older MS-DOS files.</td></tr>
+<tr><td>/w</td><td>Use the <b>/w</b> option to present a "Press any key when ready to being copying file(s)" message. The xcopy command will begin copying files as instructed after you confirm with a key press. This option is not the same as the <b>/p</b> option which asks for verification before <em>each</em> file copy.</td></tr>
+<tr><td>/x</td><td>This option copies file audit settings and System Access Control List (SACL) information. You imply <b>/o</b> when you use the <b>/x</b> option.</td></tr>
+<tr class="highlight"><td>/y</td><td>Use this option to stop the xcopy command from prompting you about overwriting files from <em>source</em> that already exist in <em>destination</em>.</td></tr>
+<tr><td>/-y</td><td>Use this option to force the xcopy command to prompt you about overwriting files. This might seem like a strange option to exist since this is the default behavior of xcopy but the <b>/y</b> option may be preset in the COPYCMD <a target="ext" href="https://www.lifewire.com/what-are-environment-variables-2625868">environment variable</a> on some computers, making this option necessary.</td></tr>
+<tr><td>/z</td><td>This option allows the xcopy command to safely stop copying files when a network connection is lost and then resume copying from where it left off once the connection is reestablished. This option also shows the percentage copied for each file during the copy process.</td></tr>
+<tr><td>/exclude:</b><em>file1</em>[<b>+</b><em>file2</em>][<b>+</b><em>file3</em>]...</td><td>This option allows you to specify one or more <em>file</em> names containing a list of search strings you want the xcopy command to use to determine files and/or folders to skip when copying.</td></tr>
+<tr><td>/?</td><td>Use the <a target="ext" href="https://www.lifewire.com/help-switch-2625896">help switch</a> with the xcopy command to show detailed help about the command. Executing <b>xcopy /?</b> is the same as using the <a target="ext" href="https://www.lifewire.com/help-command-2618092">help command</a> to execute <b>help xcopy</b>.</td></tr>
+</table>
+
+
+<h5>3. Automated backup</h5>
+
+<p>You can save your xcopy command in a text file for example called <code>update_C_updating_folder.bat</code> and create a simple task in <a href="https://www.windowscentral.com/how-create-automated-task-using-task-scheduler-windows-10" target="external">Windows task scheduler</a> to run this script automatically at your desired times.<br />  <br /></p>
+
+
+
+<h5>4. Online resources (archives)</h5>
+	<ul>
+		<li><a href="https://web.archive.org/web/20200502092313/https://www.lifewire.com/xcopy-command-2618103" target="external">Xcopy command examples, options, switches, and more </a></li>
+		<li><a href="https://web.archive.org/web/20200502091935/https://metinsaylan.com/42/using-xcopy-to-updatebackup-your-working-folders/" target="external">Using xcopy to update/backup your working folders </a></li>
+		<li><a href="https://web.archive.org/web/20200317064803/https://www.windowscentral.com/how-create-automated-task-using-task-scheduler-windows-10" target="external">How to create an automated task using Task Scheduler on Windows 10</a></li>
+	</ul>
+
+<style type="text/css">
+	body {margin:0 15px 15px}
+	code {font-size:120%}
+	h1 {margin-top:-32px; text-align:center; font-size:110%; color:white}
+	h5 {font-size:120%; padding:5px 0; margin: 5px 0}
+	html { margin-top:0;padding-top:0;border-top: 40px solid #999}
+	input[type=button] {margin:4px 10px 30px; padding:2px; height:auto; line-height:1.2em}
+	p {padding:4px 0; margin:0;font-size:0.7em;}
+	pre  {border:1px dotted #999; margin:5px 0;padding: 5px; background:#f5f5f5; color:#69c;font-size:1.1em; white-space:normal; text-align:center} 
+	table, ul {font-size:0.7em}
+	td {padding:3px}
+	td:first-child {font-weight:bold}
+	ul {margin-left: 20px}
+	.alert {color:red}
+	.codeblock {width:85%;margin:auto}
+	.format {text-align:center;font-size:0.75em;color:#777;margin-top:20px}
+	.green {color:green}
+	.grey {color:#888}
+	.highlight {background:#ffffef}
+	.nlines {padding:0; color:#999; text-align:right}
+	.reset {font-size:80%; font-style:italic; padding-left:15px}
+	.settings { text-align:center;width:auto; margin:10px auto; font-size:85% }
+</style>
+
+</body>
+</html>
